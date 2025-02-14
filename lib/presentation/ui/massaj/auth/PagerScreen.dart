@@ -5,6 +5,8 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
+import 'massaj_enter_about_screen.dart';
+import 'massaj_enter_extra_info_screen.dart';
 
 class MassajPagerScreen extends StatefulWidget {
   const MassajPagerScreen({super.key});
@@ -31,9 +33,7 @@ class _SmallDoctorPagerScreenState extends State<MassajPagerScreen> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          leading: _current == 0
-              ? null
-              : IconButton(
+          leading: IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.black),
                   onPressed: () {
                     _goToPage(_current - 1); // Oldingi sahifaga o'tish
@@ -106,8 +106,8 @@ class _SmallDoctorPagerScreenState extends State<MassajPagerScreen> {
           },
           children: [
 
-            // SmallDoctorEnterAboutScreen(onNext: () => _goToPage(1)),
-            // SmallDoctorEnterExtraInfoScreen(onNext: () => _goToPage(2)),
+            MassajEnterAboutScreen(onNext: () => _goToPage(1)),
+            MassajEnterExtraInfoScreen(onNext: () => _goToPage(2)),
             // SmallDoctorEnterProfessionScreen(),
 
 

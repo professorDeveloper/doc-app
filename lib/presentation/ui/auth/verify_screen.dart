@@ -47,7 +47,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
         });
         if (state is VerifySuccess) {
           openScreen(context, ChoosePositionScreen());
-          print(state.sendSmsCodeResponse.token);
+          print(state.sendSmsCodeResponse..detail);
         }
 
         if (state is VerifyFailure) {

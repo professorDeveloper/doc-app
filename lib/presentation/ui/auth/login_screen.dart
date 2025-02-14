@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               .show(context);
                         } else {
                           bloc.add(SendSmsCodeButtonPressed(
-                              phone: "998${maskFormatter.getUnmaskedText()}"));
+                              phone: "+998${maskFormatter.getUnmaskedText()}"));
                         }
                       },
                       elevation: 0,

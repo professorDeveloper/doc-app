@@ -1,5 +1,6 @@
 import 'package:doc_app/animations/custom_animation.dart';
 import 'package:doc_app/constants/app_images.dart';
+import 'package:doc_app/core/models/responses/choose/choose_response.dart';
 import 'package:doc_app/presentation/ui/chooses/choose_service_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class ChooseAgeScreen extends StatefulWidget {
 class _ChooseAgeScreenState extends State<ChooseAgeScreen> {
   int? _selectedValue = 0;
   late ChooseBloc bloc;
-
   @override
   void initState() {
     super.initState();
@@ -306,54 +306,6 @@ class _ChooseAgeScreenState extends State<ChooseAgeScreen> {
                   ]));
         }
         return Scaffold(
-            bottomNavigationBar: CustomAnimationsSlide(
-              direction: FadeSlideDirection.btt,
-              duration: 0.8,
-              child: Container(
-                height: 94,
-                color: AppColor.White,
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: MaterialButton(
-                    color: AppColor.BlueMain,
-                    onPressed: _selectedValue == 0
-                        ? null
-                        : () {
-                            openScreen(context, ChooseServiceScreen());
-                          },
-                    elevation: 0,
-                    highlightElevation: 0,
-                    disabledColor: AppColor.BlueLight,
-                    focusElevation: 0,
-                    textColor: AppColor.White,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        Text(
-                          'Davom etish',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: 'SF Pro Display',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Spacer(),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                          size: 24,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
             appBar: AppBar(
               backgroundColor: AppColor.White,
               elevation: Device.get().isAndroid ? 0.4 : 0.1,
@@ -371,10 +323,9 @@ class _ChooseAgeScreenState extends State<ChooseAgeScreen> {
             ),
             backgroundColor: AppColor.Gray1,
             body: Center(
-              child: CircularProgressIndicator(
-                color: AppColor.BlueMain,
-              ),
+              child: CircularProgressIndicator(color: AppColor.BlueMain),
             ));
+
       },
     );
   }

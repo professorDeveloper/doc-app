@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import '../../constants/keys.dart';
+import '../../di/get_it.dart';
 import '../../utils/my_pref.dart';
 import '../../utils/response.dart';
 import '../models/requests/auth/login_request.dart';
@@ -21,38 +23,32 @@ class AuthApiImpl implements AuthApi {
   Future<Result> sendSms(
       {required SendSmsCodeRequest sendSmsCodeRequest}) async {
     try {
-      final response1 = await http.post(
-          Uri.parse("${Keys.baseUrl}api/v1/auth/verify-phone/"),
-          body: sendSmsCodeRequest.toJson());
-      print(response1.body);
+      final response = await serviceLocator.get<Dio>().post(
+          "${Keys.baseUrl}/api/v1/auth/verify-phone/",
+          data: sendSmsCodeRequest.toJson());
+      // print("Request: ${response.requestOptions.data.toString()}");
+      // print("Request: ${response.requestOptions.uri.toString()}");
 
-      if (response1.statusCode == 200) {
-        Map<String, dynamic> jsonMap = json.decode(response1.body);
-        var sendSmsResponse = SendSmsCodeResponse.fromJson(jsonMap);
-
-        // Return a Success result with the login response data
-        return Success(sendSmsResponse);
+      if (response.statusCode == 200) {
+        final sendsms = SendSmsCodeResponse.fromJson(response.data);
+        return Success<SendSmsCodeResponse>(sendsms);
       } else {
-        // If the response is not successful, handle the error
-        var errorResponse = ErrorResponse.fromJson(json.decode(response1.body));
-
-        return Error(errorResponse.detail.toString());
+        print(response.data.toString());
+        return Error(response.data["detail"].toString());
       }
     } catch (e) {
-      // Handle other types of exceptions, e.g., network errors
-      throw Exception(e);
+      print(e.toString());
+      return Error("Xatolik yuz berdi: $e");
     }
   }
 
   @override
   Future<Result> verify({required VerifyRequest request}) async {
     try {
-
       print(request.toJson());
       String bodyData =
           jsonEncode({"code": "${request.code}", "phone": "+${request.phone}"});
       final response = await http.post(
-
           Uri.parse("${Keys.baseUrl}api/v1/auth/verify-code/"),
           headers: {"Content-Type": "application/json"},
           body: bodyData);

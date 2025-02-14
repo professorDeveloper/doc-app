@@ -1,10 +1,12 @@
 import 'package:doc_app/constants/app_images.dart';
+import 'package:doc_app/navigator/navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../constants/app_color.dart';
+import '../../main/main_screen.dart';
 
 void showFinishedSuccessDialog(BuildContext context) {
   showDialog(
@@ -90,7 +92,9 @@ void showFinishedSuccessDialog(BuildContext context) {
                           ],
                         ),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        openScreen(context, MainScreen());
+                      },
                       color: AppColor.BlueMain,
                     ),
                   ),

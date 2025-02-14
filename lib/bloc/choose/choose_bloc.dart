@@ -14,16 +14,20 @@ part 'choose_state.dart';
 
 class ChooseBloc extends Bloc<ChooseEvent, ChooseState> {
   final ChooseRepository chooseRepository = serviceLocator<ChooseRepository>();
+  List<AgeResponse> ageList=[AgeResponse(id: "1", name: "Ikkisini ham"),AgeResponse(id: "2", name: "Faqat Kattalar") ,AgeResponse(id: "3", name: "Faqat Kichiklar")];
 
   ChooseBloc() : super(ChooseInitial()) {
     on<FetchChooseEvent>((event, emit) async {
       emit(ChooseLoading());
-      var fetched = await chooseRepository.fetchChooseAge();
-      if (fetched is Success<List<AgeResponse>>) {
-        emit(ChooseSuccessState(ageList: fetched.data));
-      } else if (fetched is Error) {
-        emit(ChooseErrorState(message: fetched.errorMessage));
-      }
+      await Future.delayed(const Duration(seconds: 1));
+      emit(ChooseSuccessState(ageList: ageList));
+
+      // var fetched = await chooseRepository.fetchChooseAge();
+      // if (fetched is Success<List<AgeResponse>>) {
+      //   emit(ChooseSuccessState(ageList: fetched.data));
+      // } else if (fetched is Error) {
+      //   emit(ChooseSuccessState(ageList: ageList));
+      // }
     });
   }
 }

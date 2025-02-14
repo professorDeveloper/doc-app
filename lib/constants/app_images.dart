@@ -10,6 +10,8 @@ class AppImages {
   static const String sucess='assets/icons/sucess.svg';
   static const String editicon='assets/icons/editicon.svg';
   static const String onboarding3 = "assets/images/onboarding3.png";
+  static const String notification = "assets/icons/notification.svg";
+  static const String menu = "assets/icons/menu.svg";
   static const String profile = "assets/icons/profile.svg";
   static const String loginpic = "assets/images/loginpic.png";
   static const String capilnisa="assets/icons/capilnisa.svg";

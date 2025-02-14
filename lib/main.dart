@@ -4,6 +4,7 @@ import 'package:doc_app/presentation/ui/auth/login_screen.dart';
 import 'package:doc_app/presentation/ui/chooses/choose_age_screen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/PagerScreen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/enter_about_screen.dart';
+import 'package:doc_app/presentation/ui/main/main_screen.dart';
 import 'package:doc_app/presentation/ui/onboarding/introduction_screen.dart';
 import 'package:doc_app/utils/my_pref.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
                       ),
                       home: token != null && token.isNotEmpty
                           ? LoginScreen()
-                          : ChoosePositionScreen());
+                          : MainScreen());
                 },
               ),
             );
