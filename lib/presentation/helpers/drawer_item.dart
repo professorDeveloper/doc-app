@@ -10,16 +10,12 @@ Widget buildMenuItem(dynamic icon, bool isSvg, String title, Function onTap,
           leading: SvgPicture.asset(icon),
           title: Text(title),
           trailing: trailing,
-          onTap: () {
-            // Add menu item functionality here
-          },
+          onTap: () => onTap(),
         )
       : ListTile(
           leading: Icon(icon, color: Colors.grey),
           title: Text(title),
           trailing: trailing,
-          onTap:icon==AppImages.more?(){
-            print("object123");
-          }: onTap(),
+          onTap: () => onTap(),
         );
 }

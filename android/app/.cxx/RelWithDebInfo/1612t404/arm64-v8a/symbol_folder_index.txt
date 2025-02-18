@@ -1,0 +1,1 @@
+/Users/saikou/AndroidStudioProjects/doc_app/build/app/intermediates/cxx/RelWithDebInfo/1612t404/obj/arm64-v8a

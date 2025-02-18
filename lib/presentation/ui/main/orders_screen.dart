@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants/app_images.dart';
+import '../kichikhodim/use/detail_dialog.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -239,7 +240,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             children: [
                               Expanded(
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDetailDialog(context);
+                                  },
                                   highlightElevation: 0,
                                   // Bosilganda ham soyani yo'qotish
                                   child: Center(
@@ -259,7 +262,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                       vertical: 0, horizontal: 0),
                                   elevation: 0,
                                   focusElevation: 0,
-                                  color: AppColor.Gray1,
+                                  color: AppColor.Gray2,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),

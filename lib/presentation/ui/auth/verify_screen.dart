@@ -66,6 +66,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
         return Scaffold(
           backgroundColor: AppColor.Bg,
           appBar: AppBar(
+            toolbarHeight: 60,
             backgroundColor: AppColor.White,
             elevation: Device.get().isAndroid ? 0.4 : 0.1,
             leading: IconButton(

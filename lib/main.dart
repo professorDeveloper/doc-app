@@ -1,9 +1,17 @@
 import 'package:doc_app/bloc/choose/choose_bloc.dart';
 import 'package:doc_app/presentation/ui/auth/choose_position_screen.dart';
 import 'package:doc_app/presentation/ui/auth/login_screen.dart';
+import 'package:doc_app/presentation/ui/auth/verify_screen.dart';
+import 'package:doc_app/presentation/ui/balance/transactions_screen.dart';
 import 'package:doc_app/presentation/ui/chooses/choose_age_screen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/PagerScreen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/enter_about_screen.dart';
+import 'package:doc_app/presentation/ui/kichikhodim/orders/active_order_screen.dart';
+import 'package:doc_app/presentation/ui/kichikhodim/orders/info_success_order_screen.dart';
+import 'package:doc_app/presentation/ui/kichikhodim/orders/order_page_screen.dart';
+import 'package:doc_app/presentation/ui/kichikhodim/orders/orders_history_screen.dart';
+import 'package:doc_app/presentation/ui/kichikhodim/orders/proccessing_order_screen.dart';
+import 'package:doc_app/presentation/ui/kichikhodim/orders/start_order_screen.dart';
 import 'package:doc_app/presentation/ui/main/main_screen.dart';
 import 'package:doc_app/presentation/ui/onboarding/introduction_screen.dart';
 import 'package:doc_app/utils/my_pref.dart';
@@ -86,7 +94,7 @@ class MyApp extends StatelessWidget {
                       ),
                       home: token != null && token.isNotEmpty
                           ? LoginScreen()
-                          : MainScreen());
+                          : MainScreen(  ));
                 },
               ),
             );
