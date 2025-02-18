@@ -49,8 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) async {
           if (state is SendSmsCodeSuccess) {
             progress = false;
-            setState(() {});
-            showSuccessFlushBar("Kod jontaildi !").show(context);
             openScreen(
                 context,
                 VerifyScreen(

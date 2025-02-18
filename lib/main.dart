@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
                       ),
                       home: token != null && token.isNotEmpty
                           ? LoginScreen()
-                          : MainScreen(  ));
+                          : LoginScreen(  ));
                 },
               ),
             );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+String registerToken="";
 String convertPhoneNumber(String input) {
   String result = input.replaceAll(RegExp(r'[^0-9]'), '');
 

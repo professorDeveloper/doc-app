@@ -46,8 +46,12 @@ class _VerifyScreenState extends State<VerifyScreen> {
           setState(() {});
         });
         if (state is VerifySuccess) {
-          openScreen(context, ChoosePositionScreen());
-          print(state.sendSmsCodeResponse..detail);
+          if(registerToken.isNotEmpty){
+            openScreen(context, ChoosePositionScreen());
+          }
+          else{
+            showErrorFlushBar("Serverda xatolik").show(context);
+          }
         }
 
         if (state is VerifyFailure) {

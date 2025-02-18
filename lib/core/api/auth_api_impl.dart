@@ -57,8 +57,8 @@ class AuthApiImpl implements AuthApi {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonMap = json.decode(response.body);
         print(jsonMap.toString());
-        var verifyResponse = AuthResponse.fromJson(jsonMap);
-        return Success(verifyResponse);
+        var verifyResponse = VerifyCodeResponse.fromJson(jsonMap);
+        return Success<VerifyCodeResponse>(verifyResponse);
       } else {
         var errorResponse = ErrorResponse.fromJson(json.decode(response.body));
         print("Fail ::::" + response.body);

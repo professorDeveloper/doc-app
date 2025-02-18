@@ -8,7 +8,7 @@ class VerifyInitial extends VerifyState {}
 class VerifyLoading extends VerifyState {}
 
 class VerifySuccess extends VerifyState {
- final SendSmsCodeResponse sendSmsCodeResponse;
+ final VerifyCodeResponse sendSmsCodeResponse;
 
  VerifySuccess({required this.sendSmsCodeResponse});
 }

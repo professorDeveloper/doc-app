@@ -1,4 +1,5 @@
 import 'package:doc_app/utils/my_pref.dart';
+import 'package:doc_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,10 +24,12 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
       try {
         final response = await authApi.verify(
             request: VerifyRequest(code: event.code, phone: event.phone));
-        if (response is Success) {
-          // var sendSmsCodeResponse = AuthResponse.fromJson(response.data);
-          // print(sendSmsCodeResponse.user.phone);
-          emit(VerifySuccess(sendSmsCodeResponse: response.data));
+        if (response is Success<VerifyCodeResponse>) {
+          var sendSmsCodeResponse = response.data;
+          print(sendSmsCodeResponse.message);
+          registerToken=sendSmsCodeResponse.token;
+          print("Token Successfully saved${registerToken.length}");
+          emit(VerifySuccess(sendSmsCodeResponse: sendSmsCodeResponse));
         } else if (response is Error) {
           emit(VerifyFailure(error: response.errorMessage.toString()));
         }
