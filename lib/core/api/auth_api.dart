@@ -1,4 +1,6 @@
 
+import 'package:doc_app/core/models/requests/auth/staff_request.dart';
+
 import '../../utils/response.dart';
 import '../models/requests/auth/login_request.dart';
 import '../models/requests/auth/register_request.dart';
@@ -10,5 +12,6 @@ abstract class AuthApi {
   Future<Result> register({required RegisterRequest registerRequest});
   Future<Result> login({required LoginRequest loginRequest});
   Future<Result> verify({required VerifyRequest request});
+  Future<Result> registerStaff({required StaffRequest staffRequest});
 
 }

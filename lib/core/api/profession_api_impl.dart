@@ -11,12 +11,6 @@ class ProfessionApiImpl extends ProfessionApi {
   Future<Result> fetchDegrees() async {
     try {
       final response = await serviceLocator.get<Dio>().get(
-        options: Options(
-
-          headers: {
-            "Authorization": "Bearer ${Keys.token}", // Tokenni shu yerga qo'ying
-          },
-        ),
             "${Keys.baseUrl}/api/v1/degrees/",
           );
       print("Request: ${response.requestOptions.uri.toString()}");

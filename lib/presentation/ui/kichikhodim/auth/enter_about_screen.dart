@@ -1,3 +1,5 @@
+import 'package:doc_app/core/models/fake/auth_reg_data.dart';
+import 'package:doc_app/utils/reg_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -8,22 +10,23 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../../helpers/flushbar.dart';
 
-class SmallDoctorEnterAboutScreen extends StatefulWidget {
+class EnterAboutScreen extends StatefulWidget {
   final VoidCallback onNext;
 
-  SmallDoctorEnterAboutScreen({required this.onNext});
+  EnterAboutScreen({required this.onNext});
 
   @override
-  State<SmallDoctorEnterAboutScreen> createState() => _SmallDoctorEnterAboutScreenState();
+  State<EnterAboutScreen> createState() => _EnterAboutScreenState();
 }
 
-class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScreen>  with AutomaticKeepAliveClientMixin{
+class _EnterAboutScreenState extends State<EnterAboutScreen>
+    with AutomaticKeepAliveClientMixin {
   String? _selectedGender;
   TextEditingController datetimecontroller = TextEditingController();
   bool _obscureText = true;
   var nameError = "";
   var surnameError = "";
-  var adressError="";
+  var adressError = "";
   var JshshrError = "";
   var borndateFormatter = MaskTextInputFormatter(
     mask: '##.##.####',
@@ -44,7 +47,6 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
   var adressController = TextEditingController();
   var jsshrController = TextEditingController();
 
-
   void _toggleVisibility() {
     setState(() {
       _obscureText = !_obscureText;
@@ -62,8 +64,7 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
           margin: EdgeInsets.symmetric(
               horizontal: 20, vertical: Device.get().isAndroid ? 20 : 25),
           width: double.infinity,
-          child:
-          MaterialButton(
+          child: MaterialButton(
             color: AppColor.BlueMain,
             onPressed: () async {
               if (nameController.text.isEmpty) {
@@ -80,29 +81,32 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
                 await Future.delayed(Duration(seconds: 3));
                 surnameError = "";
                 setState(() {});
-              }
-              else if (jsshrController.text.isEmpty) {
+              } else if (jsshrController.text.isEmpty) {
                 showErrorFlushBar("JSHSHR  kiritilmagan !").show(context);
                 JshshrError = "Jsshr kiritilmagan !";
                 setState(() {});
                 await Future.delayed(Duration(seconds: 3));
                 JshshrError = "";
                 setState(() {});
-              }
-              else if(_selectedGender==null){
+              } else if (_selectedGender == null) {
                 showErrorFlushBar("Jins tanlang").show(context);
-              }
-              else if (datetimecontroller.text.isEmpty) {
+              } else if (datetimecontroller.text.isEmpty) {
                 showErrorFlushBar("Tugulgan Sana kirtilmagan").show(context);
-              }
-              else if (adressController.text.isEmpty) {
+              } else if (adressController.text.isEmpty) {
                 showErrorFlushBar("Аdress kiritilmagan").show(context);
-                adressError="Аdress kiritilmagan !";
+                adressError = "Аdress kiritilmagan !";
                 setState(() {});
                 await Future.delayed(Duration(seconds: 3));
-                adressError="";
-              }
-              else {
+                adressError = "";
+              } else {
+                var authLocalData = AuthLocalData(
+                    name: nameController.text,
+                    surname: surnameController.text,
+                    jsshr: jsshrController.text,
+                    borndate: datetimecontroller.text,
+                    hometown: adressController.text,
+                    gender: _selectedGender!);
+                RegData().setLocalAuthResponse(authLocalData);
                 widget.onNext();
               }
             },
@@ -326,7 +330,8 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffD9E4F3), width: 1),
+                            border:
+                                Border.all(color: Color(0xffD9E4F3), width: 1),
                             borderRadius: BorderRadius.circular(16),
                             color: Colors.white,
                           ),
@@ -365,7 +370,8 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
                         ),
                       ),
                     ),
-                    SizedBox(width: 13), // Adds space between the two options
+                    SizedBox(width: 13),
+                    // Adds space between the two options
                     // Option for selecting "Erkak" (Male)
                     Expanded(
                       child: GestureDetector(
@@ -378,7 +384,8 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
                           padding: EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: Color(0xffD9E4F3), width: 1),
+                            border:
+                                Border.all(color: Color(0xffD9E4F3), width: 1),
                             color: Colors.white,
                           ),
                           alignment: Alignment.center,
@@ -415,14 +422,11 @@ class _SmallDoctorEnterAboutScreenState extends State<SmallDoctorEnterAboutScree
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ],
             ),
           ),
-
-
           SizedBox(
             height: 24,
           ),

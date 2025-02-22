@@ -1,19 +1,9 @@
 import 'package:doc_app/bloc/choose/choose_bloc.dart';
-import 'package:doc_app/presentation/ui/auth/choose_position_screen.dart';
+import 'package:doc_app/bloc/register/register_bloc.dart';
+import 'package:doc_app/core/models/responses/choose/staff_type.dart';
+import 'package:doc_app/presentation/ui/chooses/choose_position_screen.dart';
 import 'package:doc_app/presentation/ui/auth/login_screen.dart';
-import 'package:doc_app/presentation/ui/auth/verify_screen.dart';
-import 'package:doc_app/presentation/ui/balance/transactions_screen.dart';
-import 'package:doc_app/presentation/ui/chooses/choose_age_screen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/PagerScreen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/auth/enter_about_screen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/orders/active_order_screen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/orders/info_success_order_screen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/orders/order_page_screen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/orders/orders_history_screen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/orders/proccessing_order_screen.dart';
-import 'package:doc_app/presentation/ui/kichikhodim/orders/start_order_screen.dart';
-import 'package:doc_app/presentation/ui/main/main_screen.dart';
-import 'package:doc_app/presentation/ui/onboarding/introduction_screen.dart';
 import 'package:doc_app/utils/my_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +38,9 @@ class MyApp extends StatelessWidget {
                 BlocProvider<LoginBloc>(
                   create: (context) => LoginBloc(),
                 ),
+                BlocProvider<RegisterBloc>(
+                  create: (context) => RegisterBloc(),
+                ),
                 BlocProvider<SendSmsCodeBloc>(
                   create: (context) => SendSmsCodeBloc(),
                 ),
@@ -64,7 +57,6 @@ class MyApp extends StatelessWidget {
                 // BlocProvider<RegisterBloc>(
                 //   create: (context) => RegisterBloc(),
                 // ),
-
               ],
               child: BlocConsumer<LoginBloc, LoginState>(
                 listener: (context, state) {},
@@ -88,13 +80,13 @@ class MyApp extends StatelessWidget {
                         //
                         // This woqrks for code too, not just values: Most code changes can be
                         // tested with just a hot reload.
-                        colorScheme: ColorScheme.fromSeed(
-                            seedColor: AppColor.BlueMain),
+                        colorScheme:
+                            ColorScheme.fromSeed(seedColor: AppColor.BlueMain),
                         useMaterial3: false,
                       ),
                       home: token != null && token.isNotEmpty
                           ? LoginScreen()
-                          : LoginScreen(  ));
+                          : LoginScreen());
                 },
               ),
             );
@@ -110,5 +102,3 @@ class MyApp extends StatelessWidget {
     return Prefs.getAccessToken();
   }
 }
-
-

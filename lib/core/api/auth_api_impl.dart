@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:doc_app/core/models/requests/auth/staff_request.dart';
+import 'package:doc_app/utils/reg_data.dart';
 import 'package:http/http.dart' as http;
 
 import '../../constants/keys.dart';
 import '../../di/get_it.dart';
 import '../../utils/my_pref.dart';
 import '../../utils/response.dart';
+import '../../utils/utils.dart';
 import '../models/requests/auth/login_request.dart';
 import '../models/requests/auth/register_request.dart';
 import '../models/requests/auth/send_sms_code_request.dart';
@@ -139,5 +142,38 @@ class AuthApiImpl implements AuthApi {
 
   Future init() async {
     await Prefs.init();
+  }
+
+  @override
+  Future<Result> registerStaff({required StaffRequest staffRequest}) async {
+    try {
+      // Convert StaffRequest object to JSON
+      final requestData = staffRequest.toJson();
+      print("Request Data: $requestData");
+      // Send POST request to register staff
+      final response = await serviceLocator.get<Dio>().post(
+        "${Keys.baseUrl}/api/v1/staff/",
+        data: requestData,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $registerToken',
+
+          // Add your CSRF token or other headers if required
+        }),
+      );
+
+      // Handle successful response
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        print("Response Data: ${response.data}");
+        return Success(response.data); // Return Success with response data
+      } else {
+        print("Error Response: ${response.data}");
+        return Error(response.data["detail"].toString());
+      }
+    } catch (e) {
+      print("Error Occurred: $e");
+      return Error("Xatolik yuz berdi: $e");
+    }
   }
 }

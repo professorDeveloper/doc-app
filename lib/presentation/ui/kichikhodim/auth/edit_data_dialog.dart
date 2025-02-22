@@ -19,7 +19,7 @@ import '../../../../constants/app_style.dart';
 import '../../../helpers/flushbar.dart';
 import '../../../helpers/image_picker_dialog.dart';
 
-File img = File("");
+List<File> imgs = [];
 
 class EditDataDialog extends StatefulWidget {
   DataModel edittingDatamodel;
@@ -49,11 +49,12 @@ class _EditDataDialogState extends State<EditDataDialog> {
     super.initState();
     bloc = BlocProvider.of<ProfessionBloc>(context);
     bloc.add(GetProfessions());
+    print(widget.edittingDatamodel.toString() );
     universityNameController.text = widget.edittingDatamodel.universityName;
     universtyTypeController.text = widget.edittingDatamodel.studytype;
     startDateController.text = widget.edittingDatamodel.startyear;
     endDateController.text = widget.edittingDatamodel.endyear;
-    img = widget.edittingDatamodel.img;
+    imgs = widget.edittingDatamodel.imgs;
   }
 
   @override
@@ -415,62 +416,125 @@ class _EditDataDialogState extends State<EditDataDialog> {
                             SizedBox(
                               height: 15,
                             ),
-                            img.path.isEmpty
+                            imgs.isEmpty
                                 ? MaterialButton(
-                                    onPressed: () {
-                                      showImagePickerDialog(
-                                          context: context,
-                                          onImagePicked: (image) {
-                                            setState(() {
-                                              img = image;
-                                            });
-                                          });
-                                    },
-                                    elevation: 0,
-                                    highlightElevation: 0,
-                                    focusElevation: 0,
-                                    color: AppColor.BlueLight,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    minWidth: 120,
-                                    height: 85,
-                                    child: SvgPicture.asset(
-                                      AppImages.addimage,
-                                      height: 28,
-                                      width: 28,
-                                    ))
-                                : InkWell(
-                                    onTap: () {
-                                      showImagePickerDialog(
-                                          context: context,
-                                          onImagePicked: (image) {
-                                            setState(() {
-                                              img = image;
-                                            });
-                                          });
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: Image.file(
-                                        img,
-                                        height: 85,
-                                        width: 120,
-                                        fit: BoxFit.cover,
+                                onPressed: () {
+                                  showImagePickerDialog(
+                                      context: context,
+                                      onImagePicked: (image) {
+                                        setState(() {
+                                          imgs.add(image);
+                                        });
+                                      });
+                                },
+                                elevation: 0,
+                                highlightElevation: 0,
+                                focusElevation: 0,
+                                color: AppColor.BlueLight,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                minWidth: 120,
+                                height: 85,
+                                child: SvgPicture.asset(
+                                  AppImages.addimage,
+                                  height: 28,
+                                  width: 28,
+                                ))
+                                : Container(
+                              height: 130,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: imgs.length + 1, // Oxirida +1 bo'ladi
+                                itemBuilder: (context, index) {
+                                  if (index == imgs.length) {
+                                    // Oxirgi elementdan keyin MaterialButton
+                                    return Container(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: Column(
+                                        children: [
+                                          MaterialButton(
+                                            onPressed: () {
+                                              showImagePickerDialog(
+                                                context: context,
+                                                onImagePicked: (image) {
+                                                  setState(() {
+                                                    imgs.add(image);
+                                                  });
+                                                },
+                                              );
+                                            },
+                                            elevation: 0,
+                                            highlightElevation: 0,
+                                            focusElevation: 0,
+                                            color: AppColor.BlueLight,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            minWidth: 120,
+                                            height: 85,
+                                            child: SvgPicture.asset(
+                                              AppImages.addimage,
+                                              height: 28,
+                                              width: 28,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            "Rasm qo`shish",
+                                            style: TextStyle(
+                                              color: Color(0xFF586E8A),
+                                              fontSize: 14,
+                                              fontFamily: 'SF Pro Display',
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.40,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              img.path.isEmpty ? "Rasm Tanlash" : "1-Rasm",
-                              style: TextStyle(
-                                color: Color(0xFF586E8A),
-                                fontSize: 14,
-                                fontFamily: 'SF Pro Display',
-                                fontWeight: FontWeight.w400,
-                                height: 1.40,
+                                    );
+                                  } else {
+                                    // Oddiy rasm itemi
+                                    return Container(
+                                      height: 150,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {},
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(12),
+                                                child: Image.file(
+                                                  imgs[index],
+                                                  height: 85,
+                                                  width: 120,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              "${index + 1}- Rasm",
+                                              style: TextStyle(
+                                                color: Color(0xFF586E8A),
+                                                fontSize: 14,
+                                                fontFamily: 'SF Pro Display',
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.40,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                             SizedBox(
@@ -533,7 +597,7 @@ class _EditDataDialogState extends State<EditDataDialog> {
                           } else if (endDateController.text.isEmpty) {
                             showErrorFlushBar("Tugash yili kiritilmagan !")
                                 .show(context);
-                          } else if (img.path.isEmpty) {
+                          } else if (imgs.isEmpty) {
                             showErrorFlushBar("Rasm kiritilmagan !")
                                 .show(context);
                           } else {
@@ -542,7 +606,7 @@ class _EditDataDialogState extends State<EditDataDialog> {
                                 studytype: selectedValue.toString(),
                                 startyear: startDateController.text,
                                 endyear: endDateController.text,
-                                img: img));
+                                imgs: imgs));
                           }
                         },
                         color: AppColor.BlueMain,
@@ -612,7 +676,6 @@ void editDataDialog(BuildContext context, DataModel edittingDatamodel,
       edittingDatamodel: edittingDatamodel,
       dataModel: (datamodel) {
         dataModel(datamodel);
-        img = File("");
         closeScreen(context);
       },
     ),

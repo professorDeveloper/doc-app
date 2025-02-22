@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doc_app/constants/app_color.dart';
 import 'package:doc_app/constants/app_images.dart';
 import 'package:doc_app/core/models/fake/DataModel.dart';
@@ -12,19 +14,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../animations/custom_animation.dart';
 import '../../../../constants/app_style.dart';
+import '../../../helpers/flushbar.dart';
 import 'add_data_dialog.dart';
 import 'edit_data_dialog.dart';
 import 'edit_other_documents.dart';
 import 'finished_success_dialog.dart';
 
-class SmallDoctorEnterProfessionScreen extends StatefulWidget {
-  const SmallDoctorEnterProfessionScreen({super.key});
+class EnterProfessionScreen extends StatefulWidget {
+  final Function(
+      {required String experience,
+      required List<DataModel> datas,
+      required List<Document> otherDocs}) onNext;
+
+  const EnterProfessionScreen({super.key, required this.onNext});
 
   @override
-  State<SmallDoctorEnterProfessionScreen> createState() => _SmallDoctorEnterProfessionScreenState();
+  State<EnterProfessionScreen> createState() => _EnterProfessionScreenState();
 }
 
-class _SmallDoctorEnterProfessionScreenState extends State<SmallDoctorEnterProfessionScreen> {
+class _EnterProfessionScreenState extends State<EnterProfessionScreen> {
   var experiencecontroller = TextEditingController();
   var experienceError = "";
   var datas = <DataModel>[];
@@ -44,7 +52,22 @@ class _SmallDoctorEnterProfessionScreenState extends State<SmallDoctorEnterProfe
           child: MaterialButton(
             color: AppColor.BlueMain,
             onPressed: () async {
-              showFinishedSuccessDialog(context);
+              if (experiencecontroller.text.isEmpty) {
+                showErrorFlushBar("Ish tajribasi kiritilmagan !").show(context);
+                experienceError = "Ish tajribasi kiritilmagan !";
+                setState(() {});
+                await Future.delayed(Duration(seconds: 3));
+                experienceError = "";
+                setState(() {});
+              } else if (datas.isEmpty) {
+                showErrorFlushBar("Malumotlar qoshilmagan").show(context);
+              } else {
+                widget.onNext(
+                  experience: experiencecontroller.text,
+                  datas: datas,
+                  otherDocs: otherDocs,
+                );
+              }
             },
             elevation: 0,
             highlightElevation: 0,
@@ -377,16 +400,30 @@ class _SmallDoctorEnterProfessionScreenState extends State<SmallDoctorEnterProfe
                                       color: AppColor.Gray1,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 12,
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image.file(
-                                      datas[index].img,
-                                      height: 85,
-                                      width: 120,
-                                      fit: BoxFit.cover,
+                                  Container(
+                                    height: 85,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 0),
+                                    child: ListView.builder(
+                                      itemBuilder: (context, i) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: Image.file(
+                                              datas[index].imgs[i],
+                                              height: 85,
+                                              width: 120,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: datas[index].imgs.length,
                                     ),
                                   ),
                                   SizedBox(
@@ -441,6 +478,7 @@ class _SmallDoctorEnterProfessionScreenState extends State<SmallDoctorEnterProfe
                           showAddDataDialog(context, (dataModel) {
                             print(dataModel.toString());
                             datas.add(dataModel);
+                            print(datas.toString());
                             setState(() {});
                           });
                         },

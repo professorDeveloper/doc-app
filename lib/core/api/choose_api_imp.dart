@@ -4,13 +4,17 @@ import 'package:doc_app/utils/response.dart';
 
 import '../../constants/keys.dart';
 import '../models/responses/choose/choose_response.dart';
+import '../models/responses/choose/choose_specalization_response.dart';
+import '../models/responses/choose/staff_type.dart';
 import 'choose_api.dart';
 
 class ChooseApiImpl extends ChooseApi {
   @override
   Future<Result> fetchChooseAge() async {
     try {
-      final response =  await serviceLocator.get<Dio>().get("${Keys.baseUrl}/api/v1/enum/accepted_age/");
+      final response = await serviceLocator
+          .get<Dio>()
+          .get("${Keys.baseUrl}/api/v1/enum/accepted_age/");
       print("Request: ${response.requestOptions.uri.toString()}");
 
       if (response.statusCode == 200) {
@@ -24,6 +28,52 @@ class ChooseApiImpl extends ChooseApi {
     } catch (e) {
       print(e.toString());
       return Error("Xatolik yuz berdi: $e");
+    }
+  }
+
+  @override
+  Future<Result> choosePosition() async {
+    try {
+      final response = await serviceLocator
+          .get<Dio>()
+          .get("${Keys.baseUrl}/api/v1/staff-type/");
+
+      if (response.statusCode == 200) {
+        // Parse the JSON data into a List of StaffType objects
+        List<StaffType> staffList = staffTypeListFromJson(response.data);
+
+        // Return success with the list of staff types
+        return Success<List<StaffType>>(staffList);
+      } else {
+        // Return failure with error message
+        return Error("Failed to load staff types");
+      }
+    } catch (e) {
+      // Return failure with exception message
+      return Error(e.toString());
+    }
+  }
+
+  @override
+  Future<Result> fetchChooseServices(StaffType staffType) async {
+    try {
+      final response = await serviceLocator.get<Dio>().get(
+            "${Keys.baseUrl}/api/v1/specializations/?staff_category=${staffType.id}",
+          );
+
+      if (response.statusCode == 200) {
+        List<Specialization> specializations = (response.data as List)
+            .map((item) => Specialization.fromJson(item))
+            .toList();
+
+        return Success<List<Specialization>>(specializations);
+      } else {
+        // Return Failure with Error Message
+        return Error("Failed to load services");
+      }
+    } catch (e) {
+      // Return Failure with Exception Message
+      return Error(e.toString());
     }
   }
 }

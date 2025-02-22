@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:doc_app/presentation/ui/auth/choose_position_screen.dart';
+import 'package:doc_app/presentation/ui/chooses/choose_position_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,6 +47,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
         });
         if (state is VerifySuccess) {
           if(registerToken.isNotEmpty){
+            phoneNumber=widget.phone;
             openScreen(context, ChoosePositionScreen());
           }
           else{

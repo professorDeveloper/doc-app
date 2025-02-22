@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:doc_app/core/models/requests/auth/staff_request.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/api/auth_api_impl.dart';
-import '../../core/models/requests/auth/register_request.dart';
-import '../../core/models/responses/auth/register_response.dart';
 import '../../di/get_it.dart';
 import '../../utils/response.dart';
 
@@ -14,26 +13,24 @@ part 'register_state.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthApiImpl authApi = serviceLocator<AuthApiImpl>();
 
-  RegisterBloc() : super(RegisterInitial()) {
+    RegisterBloc() : super(RegisterInitial()) {
     on<RegisterButtonPressed>((event, emit) async {
       emit(RegisterLoading());
+
       try {
-        final response = await authApi.register(
-            registerRequest: RegisterRequest(
-                fullName: event.fullName,
-                gender: event.gender,
-                phone: event.phone,
-                password: event.password,
-                password2: event.password2));
-        if (response is Success) {
-          final registerRes=RegisterResponse.fromJson(response.data);
-          emit(RegisterSuccess(response: registerRes));
-          print(registerRes.user!.fullName.toString()+"asdasd");
-        } else if (response is Error) {
-          emit(RegisterFailure(error: response.errorMessage.toString()));
+        // Call the API
+        final result =
+            await authApi.registerStaff(staffRequest: event.staffRequest);
+
+        if (result is Success) {
+          print("Success");
+          emit(RegisterSuccess(response: result.data));
+        } else if (result is Error) {
+          emit(RegisterFailure(error: result.errorMessage));
         }
       } catch (e) {
-        emit(RegisterFailure(error: e.toString()));
+        print("Error in RegisterBloc: $e");
+        emit(RegisterFailure(error: "Xatolik yuz berdi: $e"));
       }
     });
   }

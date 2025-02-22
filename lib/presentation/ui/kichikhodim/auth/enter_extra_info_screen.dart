@@ -1,3 +1,4 @@
+import 'package:doc_app/utils/reg_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -7,15 +8,15 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../../helpers/flushbar.dart';
 
-class SmallDoctorEnterExtraInfoScreen extends StatefulWidget {
+class EnterExtraInfoScreen extends StatefulWidget {
   final VoidCallback onNext;
-  SmallDoctorEnterExtraInfoScreen({required this.onNext});
+  EnterExtraInfoScreen({required this.onNext});
 
   @override
-  State<SmallDoctorEnterExtraInfoScreen> createState() => _SmallDoctorEnterExtraInfoScreenState();
+  State<EnterExtraInfoScreen> createState() => _EnterExtraInfoScreenState();
 }
 
-class _SmallDoctorEnterExtraInfoScreenState extends State<SmallDoctorEnterExtraInfoScreen> {
+class _EnterExtraInfoScreenState extends State<EnterExtraInfoScreen> {
   var extracontroller=TextEditingController();
   var extraError="";
   @override
@@ -42,6 +43,7 @@ class _SmallDoctorEnterExtraInfoScreenState extends State<SmallDoctorEnterExtraI
 
               }
               else{
+                RegData().setSelfDescription(extracontroller.text);
                 widget.onNext();
               }
             },
