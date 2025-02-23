@@ -141,6 +141,7 @@ class _AuthPagerScreenState extends State<AuthPagerScreen> {
                   required List<DataModel> datas,
                   required List<Document> otherDocs,
                 }) {
+
                   var selecteds = [];
                   for (var element in widget.selectedServices) {
                     selecteds.add(element.id);
@@ -159,7 +160,7 @@ class _AuthPagerScreenState extends State<AuthPagerScreen> {
                     acceptedAge: RegData().ageResponse!.id.toString(),
                     otherDatas: datas,
                     staffSpecializations: [
-                      StaffSpecialization(specialization: widget.staffType.id , experience: experience, educations: educations)
+                      StaffSpecialization(specialization: widget.staffType.id , experience: int.parse(experience), educations: educations)
                     ]
                   )
                 }),
