@@ -19,7 +19,7 @@ import '../../../helpers/image_picker_dialog.dart';
 
 File img = File("");
 
-void editOtherDocsDialog(BuildContext context, Function(OtherDocument) document,OtherDocument edditingDocument) {
+void editOtherDocsDialog(BuildContext context, Function(OtherDocument) document) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
@@ -30,7 +30,6 @@ void editOtherDocsDialog(BuildContext context, Function(OtherDocument) document,
     isScrollControlled: true,
     builder: (context) => EditOtherDocumentsView(
       dataModel:document,
-      edittingDatamodel: edditingDocument,
     ),
 
   );

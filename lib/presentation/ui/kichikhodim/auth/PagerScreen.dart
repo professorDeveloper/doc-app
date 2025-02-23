@@ -1,3 +1,4 @@
+import 'package:doc_app/core/models/requests/auth/document.dart';
 import 'package:doc_app/core/models/requests/auth/staff_specialization.dart';
 import 'package:doc_app/core/models/responses/choose/staff_type.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/enter_about_screen.dart';
