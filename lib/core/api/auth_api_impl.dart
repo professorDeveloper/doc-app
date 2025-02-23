@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:doc_app/core/models/requests/auth/staff_request.dart';
@@ -144,12 +145,32 @@ class AuthApiImpl implements AuthApi {
     await Prefs.init();
   }
 
+  Future<void> saveJsonToFile(String jsonString) async {
+    try {
+      // Get the directory for storing the file
+      final directory = Directory('lib');
+      final file = File('/Users/saikou/AndroidStudioProjects/doc-app/lib/request.json');
+
+      // Write JSON string to the file
+      await file.writeAsString(jsonString);
+
+      print("JSON saved to: ${file.path}");
+    } catch (e) {
+      print("Error Saving JSON: $e");
+    }
+  }
+
   @override
   Future<Result> registerStaff({required StaffRequest staffRequest}) async {
     try {
       // Convert StaffRequest object to JSON
       final requestData = staffRequest.toJson();
       print("Request Data: $requestData");
+      // Convert StaffRequest object to JSON
+      String jsonString = jsonEncode(requestData);
+
+      // Save JSON to file
+      await saveJsonToFile(jsonString);
       // Send POST request to register staff
       final response = await serviceLocator.get<Dio>().post(
         "${Keys.baseUrl}/api/v1/staff/",
@@ -157,7 +178,7 @@ class AuthApiImpl implements AuthApi {
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $registerToken',
+          'X-Api-Key': registerToken,
 
           // Add your CSRF token or other headers if required
         }),

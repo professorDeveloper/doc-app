@@ -19,7 +19,7 @@ import '../../../helpers/image_picker_dialog.dart';
 
 File img = File("");
 
-void massajEditOtherDocsDialog(BuildContext context, Function(Document) document,Document edditingDocument) {
+void massajEditOtherDocsDialog(BuildContext context, Function(FakeDocument) document,FakeDocument edditingDocument) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
@@ -37,8 +37,8 @@ void massajEditOtherDocsDialog(BuildContext context, Function(Document) document
 }
 
 class EditOtherDocumentsView extends StatefulWidget {
- final Document edittingDatamodel;
-  final Function(Document) dataModel;
+ final FakeDocument edittingDatamodel;
+  final Function(FakeDocument) dataModel;
 
    const EditOtherDocumentsView({super.key,required this.edittingDatamodel,required this.dataModel});
 
@@ -460,7 +460,7 @@ class _AddOtherDocumentsViewState extends State<EditOtherDocumentsView> {
                         showErrorFlushBar("Hujjat rasmi kiritilmagan !")
                             .show(context);
                       } else {
-                        widget.dataModel(Document(
+                        widget.dataModel(FakeDocument(
                             name: documentNameController.text,
                             image: img,
                             startDate: documentstartdateController.text,

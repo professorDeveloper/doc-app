@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+
+import '../requests/auth/diploma.dart';
+import '../requests/auth/education.dart';
 
 class DataModel {
   String universityName;
@@ -48,4 +52,15 @@ class DataModel {
   String toString() {
     return 'DataModel{universityName: $universityName, studytype: $studytype, startyear: $startyear, endyear: $endyear, imgs: ${imgs.map((e) => e.path).toList()}}';
   }
+  Education toEducation() =>
+      Education(
+          universityName: universityName,
+          startYear: int.parse(startyear),
+          endYear: int.parse(endyear),
+          degree: 1,
+          diplomas: imgs.map((file) {
+            final bytes = file.readAsBytesSync();
+            final base64String = base64Encode(bytes);
+            return Diploma(image: base64String);
+          }).toList());
 }
