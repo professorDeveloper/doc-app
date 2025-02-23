@@ -24,7 +24,7 @@ class EnterProfessionScreen extends StatefulWidget {
   final Function(
       {required String experience,
       required List<DataModel> datas,
-      required List<Document> otherDocs}) onNext;
+      required List<OtherDocument> otherDocs}) onNext;
 
   const EnterProfessionScreen({super.key, required this.onNext});
 
@@ -36,7 +36,7 @@ class _EnterProfessionScreenState extends State<EnterProfessionScreen> {
   var experiencecontroller = TextEditingController();
   var experienceError = "";
   var datas = <DataModel>[];
-  var otherDocs = <Document>[];
+  var otherDocs = <OtherDocument>[];
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:doc_app/core/models/requests/auth/diploma.dart';
+import 'package:doc_app/core/models/requests/auth/education.dart';
 
 class DataModel {
   String universityName;
@@ -39,13 +43,29 @@ class DataModel {
       'studytype': studytype,
       'startyear': startyear,
       'endyear': endyear,
-      'imgs': imgs.map((file) => file.path).toList(), // Only paths for easier debugging
+      'imgs': imgs.map((file) => file.path).toList(),
+      // Only paths for easier debugging
     };
   }
 
   /// Override toString for better logging
   @override
   String toString() {
-    return 'DataModel{universityName: $universityName, studytype: $studytype, startyear: $startyear, endyear: $endyear, imgs: ${imgs.map((e) => e.path).toList()}}';
+    return 'DataModel{universityName: $universityName, studytype: $studytype, startyear: $startyear, endyear: $endyear, imgs: ${imgs
+        .map((e) => e.path).toList()}}';
   }
+
+  Education toEducation() =>
+      Education(
+          universityName: universityName,
+          startYear: int.parse(startyear),
+          endYear: int.parse(endyear),
+          degree: 1,
+          diplomas: imgs.map((file) {
+            final bytes = file.readAsBytesSync();
+            final base64String = base64Encode(bytes);
+            return Diploma(image: base64String);
+          }).toList());
+
+
 }
