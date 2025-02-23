@@ -146,22 +146,22 @@ class _AuthPagerScreenState extends State<AuthPagerScreen> {
                     selecteds.add(element.id);
                   }
                   var userinfo = RegData().asa;
-                  var staffRequest = StaffRequest(
-                    type: widget.staffType.id,
-                    firstName: userinfo!.name.toString(),
-                    lastName: userinfo!.surname.toString(),
-                    phone: phoneNumber,
-                    jshshr: userinfo!.jsshr.toString(),
-                    address: userinfo.hometown.toString(),
-                    birthday: userinfo.borndate.toString(),
-                    gender: userinfo.gender.toString(),
-                    about: RegData().selfDescription!,
-                    acceptedAge: RegData().ageResponse!.id.toString(),
-                    otherDatas: datas,
-                    staffSpecializations: [
-                      StaffSpecialization(specialization: , experience: experience, educations: educations)
-                    ]
-                  )
+                  // var staffRequest = StaffRequest(
+                  //   type: widget.staffType.id,
+                  //   firstName: userinfo!.name.toString(),
+                  //   lastName: userinfo!.surname.toString(),
+                  //   phone: phoneNumber,
+                  //   jshshr: userinfo!.jsshr.toString(),
+                  //   address: userinfo.hometown.toString(),
+                  //   birthday: userinfo.borndate.toString(),
+                  //   gender: userinfo.gender.toString(),
+                  //   about: RegData().selfDescription!,
+                  //   acceptedAge: RegData().ageResponse!.id.toString(),
+                  //   otherDatas: datas,
+                  //   staffSpecializations: [
+                  //     StaffSpecialization(specialization: , experience: experience, educations: educations)
+                  //   ]
+                  // )
                 }),
               ],
             ),

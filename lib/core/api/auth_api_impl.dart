@@ -157,8 +157,7 @@ class AuthApiImpl implements AuthApi {
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $registerToken',
-
+          'X-Api-Key': registerToken,
           // Add your CSRF token or other headers if required
         }),
       );
