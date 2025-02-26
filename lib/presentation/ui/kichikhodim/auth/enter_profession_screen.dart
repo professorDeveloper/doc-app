@@ -24,9 +24,11 @@ class EnterProfessionScreen extends StatefulWidget {
   final Function(
       {required String experience,
       required List<DataModel> datas,
-      required List<OtherDocument> otherDocs}) onNext;
+      required List<FakeDocument> otherDocs}) onNext;
+  final bool isLoading; // Accept loading state
 
-  const EnterProfessionScreen({super.key, required this.onNext});
+  const EnterProfessionScreen(
+      {super.key, required this.onNext, required this.isLoading});
 
   @override
   State<EnterProfessionScreen> createState() => _EnterProfessionScreenState();
@@ -36,7 +38,7 @@ class _EnterProfessionScreenState extends State<EnterProfessionScreen> {
   var experiencecontroller = TextEditingController();
   var experienceError = "";
   var datas = <DataModel>[];
-  var otherDocs = <OtherDocument>[];
+  var otherDocs = <FakeDocument>[];
 
   @override
   Widget build(BuildContext context) {
@@ -76,18 +78,24 @@ class _EnterProfessionScreenState extends State<EnterProfessionScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
-            child: Row(
-              children: [
-                Spacer(),
-                Text("Yakunlash"),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 24,
-                )
-              ],
-            ),
+            child: widget.isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColor.White,
+                    ),
+                  )
+                : Row(
+                    children: [
+                      Spacer(),
+                      Text("Yakunlash"),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                        size: 24,
+                      )
+                    ],
+                  ),
           ),
         ),
       ),

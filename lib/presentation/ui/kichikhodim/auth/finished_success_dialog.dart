@@ -93,7 +93,7 @@ void showFinishedSuccessDialog(BuildContext context) {
                         ),
                       ),
                       onPressed: () async {
-                        openScreen(context, MainScreen());
+                        // openReplaceScreen(context, MainScreen());
                       },
                       color: AppColor.BlueMain,
                     ),

@@ -8,7 +8,7 @@ class RegisterInitial extends RegisterState {}
 class RegisterLoading extends RegisterState {}
 
 class RegisterSuccess extends RegisterState {
-  final dynamic response;
+  final String response;
 
   RegisterSuccess({required this.response});
 }

@@ -12,6 +12,11 @@ class VerifySuccess extends VerifyState {
 
  VerifySuccess({required this.sendSmsCodeResponse});
 }
+class VerifyRegistredSuccess extends VerifyState {
+ final UserResponse userResponse;
+
+ VerifyRegistredSuccess({required this.userResponse});
+}
 
 class VerifyFailure extends VerifyState {
   final String error;

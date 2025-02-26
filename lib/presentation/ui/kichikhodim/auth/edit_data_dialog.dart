@@ -151,7 +151,7 @@ class _EditDataDialogState extends State<EditDataDialog> {
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Kiriting...",
                                 errorText: universityError.isEmpty

@@ -1,0 +1,2 @@
+/Users/saikou/AndroidStudioProjects/doc-app/android/app/.cxx/Debug/2f6c3t2s/x86/CMakeFiles/edit_cache.dir
+/Users/saikou/AndroidStudioProjects/doc-app/android/app/.cxx/Debug/2f6c3t2s/x86/CMakeFiles/rebuild_cache.dir

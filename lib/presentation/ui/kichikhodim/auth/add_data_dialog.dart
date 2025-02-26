@@ -152,7 +152,7 @@ class _AddDataDialogViewState extends State<AddDataDialogView> {
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                 ),
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.name,
                                 decoration: InputDecoration(
                                   hintText: "Kiriting...",
                                   errorText: universityError.isEmpty

@@ -19,7 +19,7 @@ import '../../../helpers/image_picker_dialog.dart';
 
 File img = File("");
 
-void showAddOtherDialog(BuildContext context, Function(OtherDocument) dataModel) {
+void showAddOtherDialog(BuildContext context, Function(FakeDocument) dataModel) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
@@ -35,7 +35,7 @@ void showAddOtherDialog(BuildContext context, Function(OtherDocument) dataModel)
 }
 
 class AddOtherDocumentsView extends StatefulWidget {
-  final Function(OtherDocument) dataModel;
+  final Function(FakeDocument) dataModel;
 
   const AddOtherDocumentsView({super.key, required this.dataModel});
 
@@ -127,7 +127,7 @@ class _AddOtherDocumentsViewState extends State<AddOtherDocumentsView> {
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             hintText: "Kiriting...",
                             errorText:
@@ -450,7 +450,7 @@ class _AddOtherDocumentsViewState extends State<AddOtherDocumentsView> {
                         showErrorFlushBar("Hujjat rasmi kiritilmagan !")
                             .show(context);
                       } else {
-                        widget.dataModel(OtherDocument(
+                        widget.dataModel(FakeDocument(
                             name: documentNameController.text,
                             image: img,
                             startDate: documentstartdateController.text,

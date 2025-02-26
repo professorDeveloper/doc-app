@@ -1,3 +1,4 @@
+import 'package:doc_app/core/models/responses/auth/sucess_login_response.dart';
 import 'package:doc_app/utils/my_pref.dart';
 import 'package:doc_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
 
   VerifyBloc() : super(VerifyInitial()) {
     on<VerifyButtonPressed>((event, emit) async {
+      await Prefs.init();
       emit(VerifyLoading());
 
       try {
@@ -27,9 +29,14 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
         if (response is Success<VerifyCodeResponse>) {
           var sendSmsCodeResponse = response.data;
           print(sendSmsCodeResponse.message);
-          registerToken=sendSmsCodeResponse.token;
+          registerToken = sendSmsCodeResponse.token;
           print("Token Successfully saved${registerToken.length}");
           emit(VerifySuccess(sendSmsCodeResponse: sendSmsCodeResponse));
+        } else if (response is Success<UserResponse>) {
+          Prefs.setRefreshToken(response.data.refreshToken!);
+          Prefs.setAccessToken(response.data.accessToken!);
+          print("Token Successfully saved${registerToken.length}");
+          emit(VerifyRegistredSuccess(userResponse: response.data));
         } else if (response is Error) {
           emit(VerifyFailure(error: response.errorMessage.toString()));
         }

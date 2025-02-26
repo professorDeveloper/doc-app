@@ -19,7 +19,7 @@ import '../../../helpers/image_picker_dialog.dart';
 
 File img = File("");
 
-void editOtherDocsDialog(BuildContext context, Function(OtherDocument) document) {
+void editOtherDocsDialog(BuildContext context, Function(FakeDocument) document,FakeDocument edditingDocument) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
@@ -30,14 +30,15 @@ void editOtherDocsDialog(BuildContext context, Function(OtherDocument) document)
     isScrollControlled: true,
     builder: (context) => EditOtherDocumentsView(
       dataModel:document,
+      edittingDatamodel: edditingDocument,
     ),
 
   );
 }
 
 class EditOtherDocumentsView extends StatefulWidget {
- final OtherDocument edittingDatamodel;
-  final Function(OtherDocument) dataModel;
+ final FakeDocument edittingDatamodel;
+  final Function(FakeDocument) dataModel;
 
    const EditOtherDocumentsView({super.key,required this.edittingDatamodel,required this.dataModel});
 
@@ -137,7 +138,7 @@ class _AddOtherDocumentsViewState extends State<EditOtherDocumentsView> {
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             hintText: "Kiriting...",
                             errorText:
@@ -459,7 +460,7 @@ class _AddOtherDocumentsViewState extends State<EditOtherDocumentsView> {
                         showErrorFlushBar("Hujjat rasmi kiritilmagan !")
                             .show(context);
                       } else {
-                        widget.dataModel(OtherDocument(
+                        widget.dataModel(FakeDocument(
                             name: documentNameController.text,
                             image: img,
                             startDate: documentstartdateController.text,

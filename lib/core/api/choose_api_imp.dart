@@ -60,18 +60,24 @@ class ChooseApiImpl extends ChooseApi {
       final response = await serviceLocator.get<Dio>().get(
             "${Keys.baseUrl}/api/v1/specializations/?staff_category=${staffType.id}",
           );
-
+      print(response.data.toString());
       if (response.statusCode == 200) {
         List<Specialization> specializations = (response.data as List)
             .map((item) => Specialization.fromJson(item))
             .toList();
+        print("sucess");
 
         return Success<List<Specialization>>(specializations);
       } else {
         // Return Failure with Error Message
+        print("Failed");
+
         return Error("Failed to load services");
       }
     } catch (e) {
+      print(e.toString());
+      print("catch");
+
       // Return Failure with Exception Message
       return Error(e.toString());
     }

@@ -5,7 +5,11 @@ Future openScreen(BuildContext context, Widget screenName) {
 }
 
 Future openReplaceScreen(BuildContext context, Widget screenName) {
-  return Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => screenName));
+  return Navigator.pushAndRemoveUntil(
+    context,
+    CupertinoPageRoute(builder: (_) => screenName),
+        (Route<dynamic> route) => false, // Removes all previous routes
+  );
 }
 
 // Future openReplaceScreen(BuildContext context, Widget screenName) {

@@ -1,8 +1,10 @@
 import 'package:doc_app/constants/app_color.dart';
+import 'package:doc_app/core/models/responses/auth/sucess_login_response.dart';
 import 'package:doc_app/navigator/navigator.dart';
 import 'package:doc_app/presentation/ui/balance/transactions_screen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/orders/orders_history_screen.dart';
 import 'package:doc_app/presentation/ui/main/orders_screen.dart';
+import 'package:doc_app/utils/reg_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 
 import '../../../constants/app_images.dart';
 import '../../../constants/app_style.dart';
+import '../../../utils/my_pref.dart';
 import '../../helpers/drawer_item.dart';
 
 class MainScreen extends StatefulWidget {
@@ -23,6 +26,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
     var scaffoldKey = GlobalKey<ScaffoldState>();
   var enabled = false;
+
+
   PageController _controller = PageController(initialPage: 0,);
   void _goToPage(int index) {
     _controller.animateToPage(
@@ -35,8 +40,17 @@ class _MainScreenState extends State<MainScreen> {
     });
     print("asdasd");
   }
+    void lala() async {
+      await Prefs.init();
+      print(Prefs.getAccessToken());
+    }
 
-
+    @override
+  void initState() {
+    // TODO: implement initState
+      super.initState();
+      lala();
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -73,12 +87,12 @@ class _MainScreenState extends State<MainScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Karima Nazarova",
+                                "Azamov Kh",
                                 style: AppStyle.sfproDisplay16Black
                                     .copyWith(fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "Terapevt",
+                                "Kichik tibbiy hodim",
                                 style: AppStyle.sfproDisplay14w400Black
                                     .copyWith(color: AppColor.Gray5),
                               )
@@ -478,7 +492,7 @@ class _MainScreenState extends State<MainScreen> {
           body: TabBarView(
             children: [
               OrdersScreen(),
-              OrdersScreen(),
+              Container(),
             ],
           )),
     );

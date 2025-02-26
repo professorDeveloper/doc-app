@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants/app_images.dart';
+import '../../../utils/my_pref.dart';
 import '../kichikhodim/use/detail_dialog.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -14,6 +15,8 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +45,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: 13,horizontal:1),
+                    margin: EdgeInsets.symmetric(vertical: 13, horizontal: 1),
                     decoration: ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -268,7 +271,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 12,),
+                              SizedBox(
+                                width: 12,
+                              ),
                               Expanded(
                                 child: MaterialButton(
                                   onPressed: () {},
@@ -299,7 +304,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                         ],
                       ),
                     ),

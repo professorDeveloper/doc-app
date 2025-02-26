@@ -4,6 +4,8 @@ import 'package:doc_app/core/models/responses/choose/staff_type.dart';
 import 'package:doc_app/presentation/ui/chooses/choose_position_screen.dart';
 import 'package:doc_app/presentation/ui/auth/login_screen.dart';
 import 'package:doc_app/presentation/ui/kichikhodim/auth/PagerScreen.dart';
+import 'package:doc_app/presentation/ui/main/main_screen.dart';
+import 'package:doc_app/presentation/ui/onboarding/introduction_screen.dart';
 import 'package:doc_app/utils/my_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,8 +87,8 @@ class MyApp extends StatelessWidget {
                         useMaterial3: false,
                       ),
                       home: token != null && token.isNotEmpty
-                          ? LoginScreen()
-                          : LoginScreen());
+                          ? MainScreen()
+                          :IntroductionScreen());
                 },
               ),
             );

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:doc_app/presentation/ui/chooses/choose_position_screen.dart';
+import 'package:doc_app/presentation/ui/main/main_screen.dart';
+import 'package:doc_app/utils/reg_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,13 +48,17 @@ class _VerifyScreenState extends State<VerifyScreen> {
           setState(() {});
         });
         if (state is VerifySuccess) {
-          if(registerToken.isNotEmpty){
-            phoneNumber=widget.phone;
+          if (registerToken.isNotEmpty) {
+            phoneNumber = widget.phone;
             openScreen(context, ChoosePositionScreen());
-          }
-          else{
+          } else {
             showErrorFlushBar("Serverda xatolik").show(context);
           }
+        }
+        if (state is VerifyRegistredSuccess) {
+          RegData().setUserResponse(state.userResponse);
+          openReplaceScreen(context, MainScreen());
+
         }
 
         if (state is VerifyFailure) {

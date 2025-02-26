@@ -88,6 +88,14 @@ class _EnterAboutScreenState extends State<EnterAboutScreen>
                 await Future.delayed(Duration(seconds: 3));
                 JshshrError = "";
                 setState(() {});
+              } else if (jsshrController.text.length != 14) {
+                showErrorFlushBar("JSHSHR  14 ta bolishi kerak !")
+                    .show(context);
+                JshshrError = "JSHSHR  14 ta bolishi kerak !";
+                setState(() {});
+                await Future.delayed(Duration(seconds: 3));
+                JshshrError = "";
+                setState(() {});
               } else if (_selectedGender == null) {
                 showErrorFlushBar("Jins tanlang").show(context);
               } else if (datetimecontroller.text.isEmpty) {
@@ -105,7 +113,7 @@ class _EnterAboutScreenState extends State<EnterAboutScreen>
                     jsshr: jsshrController.text,
                     borndate: datetimecontroller.text,
                     hometown: adressController.text,
-                    gender: _selectedGender!);
+                    gender: _selectedGender == "Erkak" ? "MALE" : "FEMALE");
                 RegData().setLocalAuthResponse(authLocalData);
                 widget.onNext();
               }
@@ -271,7 +279,7 @@ class _EnterAboutScreenState extends State<EnterAboutScreen>
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     errorText: JshshrError.isEmpty ? null : JshshrError,
                     hintText: "Kiriting...",

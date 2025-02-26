@@ -35,6 +35,7 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
     super.initState();
     chooseBloc = BlocProvider.of<ChooseBloc>(context);
     chooseBloc.add(FetchChooseSpecializationEvent(staffType: widget.staffType));
+    print("asdasd ");
   }
 
   @override
@@ -123,7 +124,7 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
               itemCount: state.specializationList[0].services.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
@@ -139,7 +140,6 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
                       });
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
                       padding:
                           EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                       decoration: BoxDecoration(
@@ -150,17 +150,26 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: SvgPicture.asset(
-                              AppImages.tibbiyhodimserviceicon,
-                              width: 40,
-                              height: 40,
-                            ),
+                            child: state.specializationList[0].services[index]
+                                        .image !=
+                                    null
+                                ? Image.network(
+                                    state.specializationList[0].services[index]
+                                        .image!,
+                                    width: 40,
+                                    height: 40,
+                                  )
+                                : SvgPicture.asset(
+                                    AppImages.tibbiyhodimserviceicon,
+                                    width: 40,
+                                    height: 40,
+                                  ),
                           ),
                           SizedBox(width: 12),
                           Expanded(
                             child: Text(
                                 maxLines: 1,
-                                "${state.specializationList[0].services[index].name}",
+                                "${state.specializationList[0].services[index].description}",
                                 style: TextStyle(fontSize: 16)),
                           ),
                           Checkbox(

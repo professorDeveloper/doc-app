@@ -4,6 +4,7 @@ class Specialization {
   final String description;
   final List<Service> services;
   final int staffCategory;
+  final String? image;
 
   Specialization({
     required this.id,
@@ -11,6 +12,7 @@ class Specialization {
     required this.description,
     required this.services,
     required this.staffCategory,
+    this.image,
   });
 
   factory Specialization.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class Specialization {
           .map((serviceJson) => Service.fromJson(serviceJson))
           .toList(),
       staffCategory: json['staff_category'],
+      image: json['image'],
     );
   }
 
@@ -32,6 +35,7 @@ class Specialization {
       'description': description,
       'services': services.map((service) => service.toJson()).toList(),
       'staff_category': staffCategory,
+      'image': image,
     };
   }
 }
@@ -43,8 +47,9 @@ class Service {
   final String description;
   final List<ServiceTimeType> serviceTimeTypes;
   final List<int> specialization;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String? image;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Service({
     required this.id,
@@ -53,22 +58,30 @@ class Service {
     required this.description,
     required this.serviceTimeTypes,
     required this.specialization,
-    required this.createdAt,
-    required this.updatedAt,
+    this.image,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) {
     return Service(
       id: json['id'],
-      name: json['name'],
+      name: json['name'] ?? '',
       price: json['price'],
       description: json['description'],
       serviceTimeTypes: (json['service_time_types'] as List)
           .map((typeJson) => ServiceTimeType.fromJson(typeJson))
           .toList(),
-      specialization: List<int>.from(json['specialization']),
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      specialization: json['specialization'] != null
+          ? List<int>.from(json['specialization'])
+          : [],
+      image: json['image'],
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
     );
   }
 
@@ -81,8 +94,9 @@ class Service {
       'service_time_types':
       serviceTimeTypes.map((type) => type.toJson()).toList(),
       'specialization': specialization,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'image': image,
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
     };
   }
 }
@@ -91,17 +105,17 @@ class ServiceTimeType {
   final int id;
   final String name;
   final String price;
-  final int service;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final int? service;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   ServiceTimeType({
     required this.id,
     required this.name,
     required this.price,
-    required this.service,
-    required this.createdAt,
-    required this.updatedAt,
+    this.service,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory ServiceTimeType.fromJson(Map<String, dynamic> json) {
@@ -110,8 +124,12 @@ class ServiceTimeType {
       name: json['name'],
       price: json['price'],
       service: json['service'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
     );
   }
 
@@ -121,9 +139,8 @@ class ServiceTimeType {
       'name': name,
       'price': price,
       'service': service,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
     };
   }
 }
-

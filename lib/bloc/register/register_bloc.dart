@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:doc_app/core/models/requests/auth/staff_request.dart';
+import 'package:doc_app/core/models/responses/auth/sucess_register_response.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/api/auth_api_impl.dart';
@@ -13,7 +14,7 @@ part 'register_state.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthApiImpl authApi = serviceLocator<AuthApiImpl>();
 
-    RegisterBloc() : super(RegisterInitial()) {
+  RegisterBloc() : super(RegisterInitial()) {
     on<RegisterButtonPressed>((event, emit) async {
       emit(RegisterLoading());
 
@@ -22,9 +23,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         final result =
             await authApi.registerStaff(staffRequest: event.staffRequest);
 
-        if (result is Success) {
+        if (result is Success<AuthResponse>) {
           print("Success");
-          emit(RegisterSuccess(response: result.data));
+          emit(RegisterSuccess(response: result.data.user.firstName));
         } else if (result is Error) {
           emit(RegisterFailure(error: result.errorMessage));
         }

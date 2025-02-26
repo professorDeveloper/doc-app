@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:doc_app/core/models/requests/auth/staff_request.dart';
@@ -18,6 +19,8 @@ import '../models/responses/auth/error_response.dart';
 import '../models/responses/auth/login_response.dart';
 import '../models/responses/auth/register_response.dart';
 import '../models/responses/auth/send_sms_code_response.dart';
+import '../models/responses/auth/sucess_login_response.dart';
+import '../models/responses/auth/sucess_register_response.dart';
 import '../models/responses/auth/verify_success.dart';
 import 'auth_api.dart';
 
@@ -56,12 +59,16 @@ class AuthApiImpl implements AuthApi {
           headers: {"Content-Type": "application/json"},
           body: bodyData);
 
-      print(response.body);
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonMap = json.decode(response.body);
-        print(jsonMap.toString());
-        var verifyResponse = VerifyCodeResponse.fromJson(jsonMap);
-        return Success<VerifyCodeResponse>(verifyResponse);
+        if(jsonMap.containsKey("access_token")){
+          var loginedResponse = UserResponse.fromJson(jsonMap);
+          return Success<UserResponse>(loginedResponse);
+        }
+        else{
+          return Success<VerifyCodeResponse>(VerifyCodeResponse.fromJson(jsonMap));
+        }
+        
       } else {
         var errorResponse = ErrorResponse.fromJson(json.decode(response.body));
         print("Fail ::::" + response.body);
@@ -144,28 +151,55 @@ class AuthApiImpl implements AuthApi {
     await Prefs.init();
   }
 
+  Future<void> saveJsonToFile(String jsonString) async {
+    try {
+      // Get the directory for storing the file
+      final directory = Directory('lib');
+      final file =
+          File('/Users/saikou/AndroidStudioProjects/doc-app/lib/request.json');
+
+      // Write JSON string to the file
+      await file.writeAsString(jsonString);
+
+      print("JSON saved to: ${file.path}");
+    } catch (e) {
+      print("Error Saving JSON: $e");
+    }
+  }
+
   @override
   Future<Result> registerStaff({required StaffRequest staffRequest}) async {
     try {
       // Convert StaffRequest object to JSON
       final requestData = staffRequest.toJson();
       print("Request Data: $requestData");
+      // Convert StaffRequest object to JSON
+      String jsonString = jsonEncode(requestData);
+
+      // Save JSON to file
+      await saveJsonToFile(jsonString);
       // Send POST request to register staff
       final response = await serviceLocator.get<Dio>().post(
-        "${Keys.baseUrl}/api/v1/staff/",
-        data: requestData,
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-Api-Key': registerToken,
-          // Add your CSRF token or other headers if required
-        }),
-      );
+            "${Keys.baseUrl}/api/v1/staff/",
+            data: requestData,
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Token': registerToken,
+
+              // Add your CSRF token or other headers if required
+            }),
+          );
 
       // Handle successful response
       if (response.statusCode == 201 || response.statusCode == 200) {
         print("Response Data: ${response.data}");
-        return Success(response.data); // Return Success with response data
+        AuthResponse authResponse = AuthResponse.fromJson(response.data);
+        await Prefs.init();
+        Prefs.setAccessToken(authResponse.accessToken!);
+        Prefs.setRefreshToken(authResponse.refreshToken!);
+        return Success<AuthResponse>(
+            authResponse); // Return Success with response data
       } else {
         print("Error Response: ${response.data}");
         return Error(response.data["detail"].toString());

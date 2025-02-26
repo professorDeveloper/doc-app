@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 String registerToken="";
 String phoneNumber="";
+String convertToDashedDate(String date) {
+  DateFormat inputFormat = DateFormat('dd.MM.yyyy');
+  DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+
+  DateTime parsedDate = inputFormat.parse(date);
+  return outputFormat.format(parsedDate);
+}
+
 String convertPhoneNumber(String input) {
   String result = input.replaceAll(RegExp(r'[^0-9]'), '');
 

@@ -1,6 +1,4 @@
 
-import 'other_data.dart';
-
 class Document {
   final String file;
 
@@ -16,3 +14,4 @@ class Document {
     'file': file,
   };
 }
+    
