@@ -1,0 +1,2 @@
+/Users/saikou/AndroidStudioProjects/doc-app/android/app/.cxx/RelWithDebInfo/o22p2bks/x86/CMakeFiles/edit_cache.dir
+/Users/saikou/AndroidStudioProjects/doc-app/android/app/.cxx/RelWithDebInfo/o22p2bks/x86/CMakeFiles/rebuild_cache.dir
